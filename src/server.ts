@@ -1,12 +1,26 @@
 import fastify from "fastify";
+import cors from "@fastify/cors";
 
 const server = fastify({ logger: true });
 
-const teams = [ { id: 1, name: "McLaren", base: "Woking, United Kingdom" },
-    { id: 2, name: "Ferrari", base: "Maranello, Italy" },
-    { id: 3, name: "Red Bull Racing", base: "Milton Keynes, United Kingdom" },
-    { id: 4, name: "Mercedes", base: "Brackley, United Kingdom" }
+server.register(cors, {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+});
+
+const teams = [
+  { id: 1, name: "Red Bull Racing", base: "Milton Keynes, United Kingdom" },
+  { id: 2, name: "Mercedes", base: "Brackley, United Kingdom" },
+  { id: 3, name: "Ferrari", base: "Maranello, Italy" },
+  { id: 4, name: "McLaren", base: "Woking, United Kingdom" },
+  { id: 5, name: "Aston Martin", base: "Silverstone, United Kingdom" },
+  { id: 6, name: "Alpine", base: "Enstone, United Kingdom / Viry-Châtillon, France" },
+  { id: 7, name: "Williams", base: "Grove, United Kingdom" },
+  { id: 8, name: "Visa Cash App RB", base: "Faenza, Italy" },
+  { id: 9, name: "Stake F1 Team Kick Sauber", base: "Hinwil, Switzerland" },
+  { id: 10, name: "Haas", base: "Kannapolis, United States" }
 ];
+
 
 const drivers = [
     { id: 1, name: "Lewis Hamilton", team: "Mercedes" },
@@ -38,7 +52,7 @@ server.get<{Params: DriversParams}>("/drivers/:id", async (request, response) =>
     return { message: "Driver not found" };
   }else{
     response.type("application/json").code(200);
-    return driver;
+    return {driver};
   }
 
 });  
